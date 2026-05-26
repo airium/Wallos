@@ -55,9 +55,12 @@ $isAdmin = $_SESSION['userId'] == 1;
 
 $locale = isset($_COOKIE['user_locale']) ? $_COOKIE['user_locale'] : 'en_US';
 $formatter = new IntlDateFormatter(
-  $locale, 
-  IntlDateFormatter::MEDIUM,
-  IntlDateFormatter::NONE
+  $locale,
+  IntlDateFormatter::SHORT,
+  IntlDateFormatter::NONE,
+  null,
+  null,
+  'yyyy-MM-dd'
 );
 
 function hex2rgb($hex)
@@ -183,7 +186,7 @@ $mobileNavigation = $settings['mobile_nav'] ? "mobile-navigation" : "";
               <?= translate('dashboard', $i18n) ?></a>
             <a href="subscriptions.php" class="mobileNavigationHideOnMobile">
               <?php include "images/siteicons/svg/mobile-menu/subscriptions.php"; ?>
-              <?= translate('subscriptions', $i18n) ?></a>  
+              <?= translate('subscriptions', $i18n) ?></a>
             <a href="calendar.php" class="mobileNavigationHideOnMobile">
                 <?php include "images/siteicons/svg/mobile-menu/calendar.php"; ?>
                 <?= translate('calendar', $i18n) ?></a>
@@ -195,7 +198,7 @@ $mobileNavigation = $settings['mobile_nav'] ? "mobile-navigation" : "";
               <?= translate('settings', $i18n) ?></a>
             <a href="profile.php">
               <?php include "images/siteicons/svg/mobile-menu/profile.php"; ?>
-              <?= translate('profile', $i18n) ?></a>  
+              <?= translate('profile', $i18n) ?></a>
             <?php if ($isAdmin): ?>
               <a href="admin.php">
                 <?php include "images/siteicons/svg/mobile-menu/admin.php"; ?>

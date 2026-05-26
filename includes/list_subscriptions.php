@@ -94,7 +94,7 @@ function formatPrice($price, $currencyCode, $currencies)
     $formattedPrice = CurrencyFormatter::format($price, $currencyCode);
     if (strstr($formattedPrice, $currencyCode)) {
         $symbol = $currencyCode;
-        
+
         foreach ($currencies as $currency) {
 
             if ($currency['code'] === $currencyCode) {
@@ -116,7 +116,7 @@ function formatDate($date, $lang = 'en')
     $dateYear = date('Y', strtotime($date));
 
     // Determine the date format based on whether the year matches the current year
-    $dateFormat = ($currentYear == $dateYear) ? 'MMM d' : 'MMM yyyy';
+    $dateFormat = ($currentYear == $dateYear) ? 'MM-dd' : 'yyyy-MM-dd';
 
     // Try to create an IntlDateFormatter; if it fails, fallback to 'en'
     try {

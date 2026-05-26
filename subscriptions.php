@@ -191,7 +191,7 @@ $headerClass = count($subscriptions) > 0 ? "main-actions" : "main-actions hidden
       IntlDateFormatter::NONE,
       null,
       null,
-      'MMM d, yyyy'
+      'yyyy-MM-dd'
     );
 
     $print = [];
@@ -362,7 +362,7 @@ $headerClass = count($subscriptions) > 0 ? "main-actions" : "main-actions hidden
         <div class="split50">
           <label for="start_date"><?= translate('start_date', $i18n) ?></label>
           <div class="date-wrapper">
-            <input type="date" id="start_date" name="start_date" autocomplete="off">
+            <input type="date" id="start_date" name="start_date" autocomplete="off" lang="en-CA">
           </div>
         </div>
         <button type="button" id="autofill-next-payment-button"
@@ -380,7 +380,7 @@ $headerClass = count($subscriptions) > 0 ? "main-actions" : "main-actions hidden
             </div>
           </label>
           <div class="date-wrapper">
-            <input type="date" id="next_payment" name="next_payment" autocomplete="off" required>
+            <input type="date" id="next_payment" name="next_payment" autocomplete="off" required lang="en-CA">
           </div>
         </div>
       </div>
@@ -457,7 +457,7 @@ $headerClass = count($subscriptions) > 0 ? "main-actions" : "main-actions hidden
         <div class="split33 mobile-split-50">
           <label for="cancellation_date"><?= translate('cancellation_notification', $i18n) ?></label>
           <div class="date-wrapper">
-            <input type="date" id="cancellation_date" name="cancellation_date" autocomplete="off">
+            <input type="date" id="cancellation_date" name="cancellation_date" autocomplete="off" lang="en-CA">
           </div>
         </div>
       </div>

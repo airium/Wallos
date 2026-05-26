@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "GET
     $currency_symbol = $currency['symbol'];
 
 
-    $title = date('F Y', strtotime($year . '-' . $month . '-01'));
+    $title = date('Y-m', strtotime($year . '-' . $month . '-01'));
     $monthlyCost = 0;
     $notes = [];
 

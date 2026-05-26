@@ -24,7 +24,7 @@ $formatter = new IntlDateFormatter(
   IntlDateFormatter::NONE,
   null,
   null,
-  'MMM d, yyyy'
+  'yyyy-MM-dd'
 );
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
