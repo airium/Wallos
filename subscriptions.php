@@ -101,8 +101,8 @@ if ($settings['disabledToBottom'] === 'true') {
   }
 }
 
-if ($sort != "next_payment") {
-  $orderByClauses[] = "next_payment ASC";
+if ($sort != "name") {
+  $orderByClauses[] = "name ASC";
 }
 
 $sql .= " ORDER BY " . implode(", ", $orderByClauses);

@@ -150,8 +150,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     }
   }
 
-  if ($sort != "next_payment") {
-    $orderByClauses[] = "next_payment ASC";
+  if ($sort != "name") {
+    $orderByClauses[] = "name ASC";
   }
 
   $sql .= " ORDER BY " . implode(", ", $orderByClauses);
@@ -232,7 +232,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
       return $categories[$a['category_id']]['order'] - $categories[$b['category_id']]['order'];
     });
   }
-  
+
   if ($sortOrder == "payment_method_id") {
     usort($print, function ($a, $b) use ($payment_methods) {
       return $payment_methods[$a['payment_method_id']]['order'] - $payment_methods[$b['payment_method_id']]['order'];
