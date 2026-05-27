@@ -1,5 +1,5 @@
 :root {
-  --logo-flex-basis: 17%;
+  --logo-flex-basis: 15%;
 }
 
 body {
@@ -460,9 +460,9 @@ button.mobile-action-renew {
 }
 
 .subscription-main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: grid;
+  grid-template-columns: var(--logo-flex-basis) 24% 10% 12% 24% 44px auto;
+  align-items: left;
   gap: 12px;
   position: relative;
   min-height: 40px;
@@ -582,14 +582,15 @@ button.mobile-action-renew {
 .subscription-secondary>span {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: left;
+  text-align: left;
   box-sizing: border-box;
   margin: 0px;
 }
 
 .subscription .logo {
-  flex-basis: var(--logo-flex-basis);
+  overflow: hidden;
+  min-width: 0;
 }
 
 .subscription .logo img {
@@ -606,15 +607,19 @@ button.mobile-action-renew {
 }
 
 .subscription .name {
-  flex-basis: 25%;
   font-weight: 600;
+  justify-content: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subscription .cycle {
-  flex-basis: 16%;
-  flex-grow: 1;
   flex-direction: row;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subscription .cycle>svg {
@@ -625,13 +630,13 @@ button.mobile-action-renew {
 }
 
 .subscription .next {
-  flex-basis: 16%;
-  flex-grow: 1;
   text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subscription .payment_method {
-  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -644,25 +649,15 @@ button.mobile-action-renew {
   object-fit: contain;
 }
 
-.rtl .subscription .payment_method img {
-  margin-right: 10px;
-  margin-left: 0px;
-
-}
-
 .subscription .price {
-  flex-basis: 8%;
-  justify-content: center;
+  justify-content: left;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .subscription .price .original_price {
   font-size: 14px;
   color: #888;
-}
-
-.subscription .actions {
-  flex-basis: auto;
 }
 
 .subscription .actions img {
@@ -703,12 +698,20 @@ button.mobile-action-renew {
 
 @media (max-width: 768px) {
 
+  .subscription-main {
+    grid-template-columns: var(--logo-flex-basis) 24% 10% 12% 24% 44px auto;
+  }
+
   .subscription-main>.hideOnMobile {
-    display: none;
+    visibility: hidden;
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
   }
 
   .subscription-main>.name {
-    flex-basis: var(--logo-flex-basis);
     font-size: 14px;
     font-weight: normal;
     max-height: 38px;
