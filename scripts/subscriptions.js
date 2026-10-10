@@ -30,7 +30,7 @@ function resetForm() {
   const autoRenew = document.querySelector("#auto_renew");
   autoRenew.checked = true;
   const startDate = document.querySelector("#start_date");
-  startDate.value = new Date().toISOString().split('T')[0];
+  startDate.value = WallosFormat.date(new Date());
   const notifyDaysBefore = document.querySelector("#notify_days_before");
   notifyDaysBefore.disabled = true;
   const replacementSubscriptionIdSelect = document.querySelector("#replacement_subscription_id");
@@ -39,6 +39,7 @@ function resetForm() {
   replacementSubscription.classList.add("hide");
   const form = document.querySelector("#subs-form");
   form.reset();
+  WallosDateInputs.refresh(form);
   toggleOneTimeCycleUI(false);
   closeLogoSearch();
   const deleteButton = document.querySelector("#deletesub");
@@ -90,11 +91,11 @@ function fillEditFormFields(subscription) {
   payerSelect.value = subscription.payer_user_id;
 
   const startDate = document.querySelector("#start_date");
-  startDate.value = subscription.start_date;
+  startDate.value = WallosFormat.date(subscription.start_date);
   const nextPament = document.querySelector("#next_payment");
-  nextPament.value = subscription.next_payment;
+  nextPament.value = WallosFormat.date(subscription.next_payment);
   const cancellationDate = document.querySelector("#cancellation_date");
-  cancellationDate.value = subscription.cancellation_date;
+  cancellationDate.value = WallosFormat.date(subscription.cancellation_date);
 
   const notes = document.querySelector("#notes");
   notes.value = subscription.notes;
@@ -134,6 +135,7 @@ function fillEditFormFields(subscription) {
   deleteButton.setAttribute("onClick", `deleteSubscription(event, ${subscription.id})`);
 
   const modal = document.getElementById('subscription-form');
+  WallosDateInputs.refresh(document.querySelector('#subs-form'));
   modal.classList.add("is-open");
 }
 
@@ -170,7 +172,8 @@ function addSubscription() {
   const modal = document.getElementById('subscription-form');
   
   const startDate = document.querySelector("#start_date");
-  startDate.value = new Date().toISOString().split('T')[0];
+  startDate.value = WallosFormat.date(new Date());
+  WallosDateInputs.refresh(document.querySelector('#subs-form'));
 
   modal.classList.add("is-open");
   const body = document.querySelector('body');
@@ -1125,6 +1128,8 @@ function toggleOneTimeCycleUI(isOneTime) {
   const notificationsGroup = document.querySelector("#notifications-group");
   const notifyDaysCancellationGroup = document.querySelector("#notify-days-cancellation-group");
   const notificationsCheckbox = document.querySelector("#notifications");
+  const cancellationDate = document.querySelector("#cancellation_date");
+  if (cancellationDate) cancellationDate.disabled = isOneTime;
 
   if (isOneTime) {
     if (frequencySelect) frequencySelect.style.display = 'none';
@@ -1157,7 +1162,7 @@ function autoFillNextPaymentDate(e) {
   const nextPayment = document.querySelector("#next_payment"); 
 
   // Do nothing if frequency, cycle, or start date is not set
-  if (!frequencySelect.value || !cycleSelect.value || !startDate.value || isNaN(Date.parse(startDate.value))) {
+  if (!frequencySelect.value || !cycleSelect.value || !WallosFormat.isISODate(startDate.value)) {
     console.log(frequencySelect.value, cycleSelect.value, startDate.value);
     return;
   }
@@ -1166,7 +1171,7 @@ function autoFillNextPaymentDate(e) {
   const cycle = cycleSelect.value;
   const frequency = Number(frequencySelect.value);
 
-  const nextDate = new Date(startDate.value);
+  const nextDate = new Date(startDate.value + 'T00:00:00');
   let safetyCounter = 0;
   const maxIterations = 1000;
 
@@ -1193,7 +1198,8 @@ if (safetyCounter === maxIterations) {
   return;
 }
 
-nextPayment.value = toISOStringWithTimezone(nextDate).substring(0, 10);
+nextPayment.value = WallosFormat.date(nextDate);
+WallosDateInputs.refresh(document.querySelector('#subs-form'));
 }
 
 function toISOStringWithTimezone(date) {

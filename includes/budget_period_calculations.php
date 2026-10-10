@@ -110,15 +110,7 @@ if (!function_exists('getActiveBudgetPeriod')) {
 if (!function_exists('formatBudgetPeriodLabel')) {
     function formatBudgetPeriodLabel(DateTime $start, DateTime $end)
     {
-        $startLabel = $start->format('M j');
-        $endLabel = $end->format('M j');
-
-        if ($start->format('Y') !== $end->format('Y')) {
-            $startLabel .= ', ' . $start->format('Y');
-            $endLabel .= ', ' . $end->format('Y');
-        }
-
-        return $startLabel . ' - ' . $endLabel;
+        return $start->format('Y-m-d') . ' - ' . $end->format('Y-m-d');
     }
 }
 

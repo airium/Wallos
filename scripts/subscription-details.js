@@ -41,18 +41,7 @@ function detailsFormatPrice(price, currencyId) {
 }
 
 function detailsFormatDate(dateString) {
-  if (!dateString) {
-    return "";
-  }
-  const date = new Date(dateString + "T00:00:00");
-  if (isNaN(date)) {
-    return dateString;
-  }
-  try {
-    return date.toLocaleDateString(window.lang || 'en', { day: 'numeric', month: 'short', year: 'numeric' });
-  } catch (e) {
-    return date.toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' });
-  }
+  return WallosFormat.date(dateString);
 }
 
 function detailsBillingCycleText(cycle, frequency) {

@@ -203,14 +203,6 @@ $subscriptionsView = (isset($_COOKIE['subscriptionsView']) && $_COOKIE['subscrip
   </header>
   <div class="subscriptions<?= $subscriptionsView === 'grid' ? ' grid-view' : '' ?>" id="subscriptions">
     <?php
-    $formatter = new IntlDateFormatter(
-      'en', // Force English locale
-      IntlDateFormatter::SHORT,
-      IntlDateFormatter::NONE,
-      null,
-      null,
-      'MMM d, yyyy'
-    );
 
     $print = [];
     foreach ($subscriptions as $subscription) {
@@ -231,8 +223,7 @@ $subscriptionsView = (isset($_COOKIE['subscriptionsView']) && $_COOKIE['subscrip
       $print[$id]['currency_code'] = $currencies[$subscription['currency_id']]['code'];
       $currencyId = $subscription['currency_id'];
       $print[$id]['auto_renew'] = $subscription['auto_renew'];
-      $next_payment_timestamp = strtotime($subscription['next_payment']);
-      $formatted_date = $formatter->format($next_payment_timestamp);
+      $formatted_date = DateFormatter::format($subscription['next_payment']);
       $print[$id]['next_payment'] = $formatted_date;
       $paymentIconFolder = (strpos($payment_methods[$paymentMethodId]['icon'], 'images/uploads/icons/') !== false) ? "" : "images/uploads/logos/";
       $print[$id]['payment_method_icon'] = $paymentIconFolder . $payment_methods[$paymentMethodId]['icon'];
@@ -410,7 +401,7 @@ $subscriptionsView = (isset($_COOKIE['subscriptionsView']) && $_COOKIE['subscrip
         <div class="split50">
           <label for="start_date"><?= translate('start_date', $i18n) ?></label>
           <div class="date-wrapper">
-            <input type="date" id="start_date" name="start_date" autocomplete="off">
+            <input type="text" class="iso-date-input" placeholder="yyyy-mm-dd" inputmode="numeric" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" dir="ltr" id="start_date" name="start_date" autocomplete="off">
           </div>
         </div>
         <button type="button" id="autofill-next-payment-button"
@@ -428,7 +419,7 @@ $subscriptionsView = (isset($_COOKIE['subscriptionsView']) && $_COOKIE['subscrip
             </div>
           </label>
           <div class="date-wrapper">
-            <input type="date" id="next_payment" name="next_payment" autocomplete="off" required>
+            <input type="text" class="iso-date-input" placeholder="yyyy-mm-dd" inputmode="numeric" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" dir="ltr" id="next_payment" name="next_payment" autocomplete="off" required>
           </div>
         </div>
       </div>
@@ -505,7 +496,7 @@ $subscriptionsView = (isset($_COOKIE['subscriptionsView']) && $_COOKIE['subscrip
         <div class="split33 mobile-split-50">
           <label for="cancellation_date"><?= translate('cancellation_notification', $i18n) ?></label>
           <div class="date-wrapper">
-            <input type="date" id="cancellation_date" name="cancellation_date" autocomplete="off">
+            <input type="text" class="iso-date-input" placeholder="yyyy-mm-dd" inputmode="numeric" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" dir="ltr" id="cancellation_date" name="cancellation_date" autocomplete="off">
           </div>
         </div>
       </div>

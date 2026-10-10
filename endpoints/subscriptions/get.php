@@ -1,4 +1,5 @@
 <?php
+require_once '../../includes/date_formatter.php';
 require_once '../../includes/connect_endpoint.php';
 
 require_once '../../includes/currency_formatter.php';
@@ -19,14 +20,7 @@ if (isset($settings['color_theme'])) {
   $colorTheme = $settings['color_theme'];
 }
 
-$formatter = new IntlDateFormatter(
-  'en', // Force English locale
-  IntlDateFormatter::SHORT,
-  IntlDateFormatter::NONE,
-  null,
-  null,
-  'MMM d, yyyy'
-);
+
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
@@ -191,8 +185,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $paymentMethodId = $subscription['payment_method_id'];
     $print[$id]['currency_code'] = $currencies[$subscription['currency_id']]['code'];
     $currencyId = $subscription['currency_id'];
-    $next_payment_timestamp = strtotime($subscription['next_payment']);
-    $formatted_date = $formatter->format($next_payment_timestamp);
+    $formatted_date = DateFormatter::format($subscription['next_payment']);
     $print[$id]['next_payment'] = $formatted_date;
     $print[$id]['auto_renew'] = $subscription['auto_renew'];
     $paymentIconFolder = (strpos($payment_methods[$paymentMethodId]['icon'], 'images/uploads/icons/') !== false) ? "" : "images/uploads/logos/";

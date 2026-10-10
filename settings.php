@@ -121,7 +121,7 @@ $upcomingPaymentsLimit = normalize_upcoming_payments_limit($settings['upcoming_p
                 </div>
                 <div class="period-budget-field">
                     <label for="budget_period_anchor_date"><?= translate('budget_anchor_date', $i18n) ?></label>
-                    <input type="date" id="budget_period_anchor_date" name="budget_period_anchor_date"
+                    <input type="text" class="iso-date-input" placeholder="yyyy-mm-dd" inputmode="numeric" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" dir="ltr" id="budget_period_anchor_date" name="budget_period_anchor_date"
                         value="<?= htmlspecialchars($budgetPeriodAnchorDate, ENT_QUOTES, 'UTF-8') ?>">
                 </div>
                 <input type="submit" value="<?= translate('save', $i18n) ?>" id="savePeriodBudget" class="period-budget-save" onClick="savePeriodBudget()" />

@@ -3,13 +3,6 @@
 // Requires stats_calculations.php to have run first ($subscriptions, $db, $userId, $userData, $i18n, $lang).
 // All monetary values are converted to the main currency. Lifetime figures assume current prices.
 
-$monthLabelFormatter = null;
-try {
-    $monthLabelFormatter = new IntlDateFormatter($lang, IntlDateFormatter::SHORT, IntlDateFormatter::NONE, null, null, 'MMM yy');
-} catch (Throwable $e) {
-    $monthLabelFormatter = new IntlDateFormatter('en', IntlDateFormatter::SHORT, IntlDateFormatter::NONE, null, null, 'MMM yy');
-}
-
 // Currency codes for the currency exposure split
 $currencyCodesById = [];
 $stmt = $db->prepare("SELECT id, code FROM currencies WHERE user_id = :userId");
@@ -26,7 +19,7 @@ $projectionEnd = (clone $projectionStart)->modify('+12 months');
 for ($i = 0; $i < 12; $i++) {
     $bucketDate = (clone $projectionStart)->modify("+$i months");
     $projectionBuckets[$bucketDate->format('Y-m')] = [
-        'label' => $monthLabelFormatter->format($bucketDate),
+        'label' => $bucketDate->format('Y-m'),
         'total' => 0,
     ];
 }

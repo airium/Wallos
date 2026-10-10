@@ -4,6 +4,7 @@ require_once 'checkuser.php';
 require_once 'checksession.php';
 require_once 'checkredirect.php';
 require_once 'currency_formatter.php';
+require_once 'date_formatter.php';
 
 require_once 'libs/csrf.php';
 
@@ -53,12 +54,6 @@ if (isset($themeValue)) {
 
 $isAdmin = $_SESSION['userId'] == 1;
 
-$locale = isset($_COOKIE['user_locale']) ? $_COOKIE['user_locale'] : 'en_US';
-$formatter = new IntlDateFormatter(
-  $locale, 
-  IntlDateFormatter::MEDIUM,
-  IntlDateFormatter::NONE
-);
 
 function hex2rgb($hex)
 {
@@ -103,6 +98,8 @@ $mobileNavigation = $settings['mobile_nav'] ? "mobile-navigation" : "";
   <link rel="stylesheet" href="styles/font-awesome.min.css">
   <link rel="stylesheet" href="styles/brands.css">
   <script type="text/javascript" src="scripts/all.js?<?= $version ?>"></script>
+  <script src="scripts/formatting.js?<?= $version ?>"></script>
+  <script src="scripts/date-inputs.js?<?= $version ?>"></script>
   <script type="text/javascript" src="scripts/common.js?<?= $version ?>"></script>
   <script type="text/javascript">
     window.theme = <?= json_encode($theme, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS) ?>;

@@ -124,7 +124,7 @@ if ($weekStartsSunday) {
   ?>
   <div class="split-header">
     <div class="calendar-title">
-      <h2><?= translate('month-' . $calendarMonth, $i18n) ?> <?= $calendarYear ?></h2>
+      <h2><?= $calendarYear ?>-<?= $calendarMonth ?></h2>
       <div class="calendar-nav">
         <button class="button secondary-button" id="prev"
           onclick="prevMonth(<?= $calendarMonth ?>, <?= $calendarYear ?>)" <?= $sameAsCurrent ? 'disabled' : '' ?>>
