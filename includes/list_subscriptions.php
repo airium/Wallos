@@ -112,7 +112,7 @@ function formatPrice($price, $currencyCode, $currencies)
 
 function formatDate($date, $lang = 'en')
 {
-    return DateFormatter::format($date);
+    return DateFormatter::formatRenewal($date);
 }
 
 function printSubscriptions($subscriptions, $sort, $categories, $members, $i18n, $colorTheme, $imagePath, $disabledToBottom, $mobileNavigation, $showSubscriptionProgress, $currencies, $lang)

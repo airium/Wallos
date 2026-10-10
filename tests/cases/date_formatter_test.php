@@ -19,3 +19,17 @@ wallos_test('date formatting does not move a calendar date across time zones', f
     assert_same('', DateFormatter::format(null), 'absent dates remain absent');
     assert_same('', DateFormatter::format(''), 'empty dates remain empty');
 });
+
+wallos_test('only current-year subscription renewals omit the year prefix', function () {
+    assert_same('11-29', DateFormatter::formatRenewal('2026-11-29', 2026),
+        'current-year renewals use month-day');
+    assert_same('2027-02-01', DateFormatter::formatRenewal('2027-02-01', 2026),
+        'next-year renewals retain their year');
+    assert_same('2025-12-31', DateFormatter::formatRenewal('2025-12-31', 2026),
+        'past years also retain their year');
+    assert_same('02-01', DateFormatter::formatRenewal('2027-02-01', 2027),
+        'the compact display follows the current year after rollover');
+    assert_same('2026-11-29', DateFormatter::format('2026-11-29'),
+        'dates elsewhere still use the full ISO format');
+    assert_same('', DateFormatter::formatRenewal(null, 2026), 'absent renewal dates stay absent');
+});
