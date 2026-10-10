@@ -2,7 +2,7 @@
 /*
   Shared subscription details popup (backdrop + dialog + lookups).
   Include once near the end of the page, before the page's own scripts.
-  Requires: $i18n, $version, $subscriptions, and the getdbkeys.php arrays.
+  Requires: $i18n, $assetVersion, $subscriptions, and the getdbkeys.php arrays.
   Runs no queries of its own — on some pages $db is already closed here.
 */
 require_once __DIR__ . '/getdbkeys.php';
@@ -135,4 +135,4 @@ foreach ($subscriptions as $detailsSubscription) {
 <script>
   window.subscriptionLookups = <?= json_encode($detailsLookups, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
 </script>
-<script src="scripts/subscription-details.js?<?= $version ?>"></script>
+<script src="scripts/subscription-details.js?<?= $assetVersion ?>"></script>

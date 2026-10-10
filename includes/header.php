@@ -87,20 +87,20 @@ $mobileNavigation = $settings['mobile_nav'] ? "mobile-navigation" : "";
   <link rel="apple-touch-icon" sizes="152x152" href="images/icon/apple-touch-icon-152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/icon/apple-touch-icon-180.png">
   <link rel="manifest" href="manifest.php" crossorigin="use-credentials">
-  <link rel="stylesheet" href="styles/theme.css?<?= $version ?>">
-  <link rel="stylesheet" href="styles/styles.css?<?= $version ?>">
-  <link rel="stylesheet" href="styles/dark-theme.css?<?= $version ?>" id="dark-theme" <?= $theme != "dark" ? "disabled" : "" ?>>
-  <link rel="stylesheet" href="styles/themes/red.css?<?= $version ?>" id="red-theme" <?= $colorTheme != "red" ? "disabled" : "" ?>>
-  <link rel="stylesheet" href="styles/themes/green.css?<?= $version ?>" id="green-theme" <?= $colorTheme != "green" ? "disabled" : "" ?>>
-  <link rel="stylesheet" href="styles/themes/yellow.css?<?= $version ?>" id="yellow-theme" <?= $colorTheme != "yellow" ? "disabled" : "" ?>>
-  <link rel="stylesheet" href="styles/themes/purple.css?<?= $version ?>" id="purple-theme" <?= $colorTheme != "purple" ? "disabled" : "" ?>>
+  <link rel="stylesheet" href="styles/theme.css?<?= $assetVersion ?>">
+  <link rel="stylesheet" href="styles/styles.css?<?= $assetVersion ?>">
+  <link rel="stylesheet" href="styles/dark-theme.css?<?= $assetVersion ?>" id="dark-theme" <?= $theme != "dark" ? "disabled" : "" ?>>
+  <link rel="stylesheet" href="styles/themes/red.css?<?= $assetVersion ?>" id="red-theme" <?= $colorTheme != "red" ? "disabled" : "" ?>>
+  <link rel="stylesheet" href="styles/themes/green.css?<?= $assetVersion ?>" id="green-theme" <?= $colorTheme != "green" ? "disabled" : "" ?>>
+  <link rel="stylesheet" href="styles/themes/yellow.css?<?= $assetVersion ?>" id="yellow-theme" <?= $colorTheme != "yellow" ? "disabled" : "" ?>>
+  <link rel="stylesheet" href="styles/themes/purple.css?<?= $assetVersion ?>" id="purple-theme" <?= $colorTheme != "purple" ? "disabled" : "" ?>>
   <link rel="stylesheet" href="styles/barlow.css">
   <link rel="stylesheet" href="styles/font-awesome.min.css">
   <link rel="stylesheet" href="styles/brands.css">
-  <script type="text/javascript" src="scripts/all.js?<?= $version ?>"></script>
-  <script src="scripts/formatting.js?<?= $version ?>"></script>
-  <script src="scripts/date-inputs.js?<?= $version ?>"></script>
-  <script type="text/javascript" src="scripts/common.js?<?= $version ?>"></script>
+  <script type="text/javascript" src="scripts/all.js?<?= $assetVersion ?>"></script>
+  <script src="scripts/formatting.js?<?= $assetVersion ?>"></script>
+  <script src="scripts/date-inputs.js?<?= $assetVersion ?>"></script>
+  <script type="text/javascript" src="scripts/common.js?<?= $assetVersion ?>"></script>
   <script type="text/javascript">
     window.theme = <?= json_encode($theme, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS) ?>;
     window.update_theme_settings = "<?= $updateThemeSettings ?>";
@@ -146,9 +146,9 @@ $mobileNavigation = $settings['mobile_nav'] ? "mobile-navigation" : "";
     <?php
   }
   ?>
-  <script type="text/javascript" src="scripts/i18n/<?= $lang ?>.js?<?= $version ?>"></script>
-  <script type="text/javascript" src="scripts/i18n/getlang.js?<?= $version ?>"></script>
-  <script type="text/javascript" src="scripts/password-toggle.js?<?= $version ?>"></script>
+  <script type="text/javascript" src="scripts/i18n/<?= $lang ?>.js?<?= $assetVersion ?>"></script>
+  <script type="text/javascript" src="scripts/i18n/getlang.js?<?= $assetVersion ?>"></script>
+  <script type="text/javascript" src="scripts/password-toggle.js?<?= $assetVersion ?>"></script>
   <script>
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
       if (!sessionStorage.getItem('sw_prefetched')) {

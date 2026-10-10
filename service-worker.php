@@ -5,11 +5,9 @@ if (!headers_sent()) {
     header('Cache-Control: no-cache');
 }
 ?>
-// STATIC_CACHE is tied to the app version (rather than a hand-bumped literal)
-// so every release invalidates stale precached assets automatically - a release
-// that changed JS/CSS without remembering to bump a hardcoded cache version
-// used to leave already-visited browsers stuck on old cached files indefinitely.
-const STATIC_CACHE = 'static-cache-<?= $version ?>';
+// Include the upstream version and frontend content hash so custom redeploys
+// invalidate stale precached assets as well as official version updates.
+const STATIC_CACHE = 'static-cache-<?= $assetVersion ?>';
 const PAGES_CACHE = 'pages-cache-v1';
 const LOGOS_CACHE = 'logos-cache-v2';
 

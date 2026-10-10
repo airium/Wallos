@@ -259,21 +259,21 @@ if (isset($_POST['one-time-code'])) {
     <link rel="apple-touch-icon" sizes="152x152" href="images/icon/apple-touch-icon-152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/icon/apple-touch-icon-180.png">
     <link rel="manifest" href="manifest.php">
-    <link rel="stylesheet" href="styles/theme.css?<?= $version ?>">
-    <link rel="stylesheet" href="styles/login.css?<?= $version ?>">
-    <link rel="stylesheet" href="styles/themes/red.css?<?= $version ?>" id="red-theme" <?= $colorTheme != "red" ? "disabled" : "" ?>>
-    <link rel="stylesheet" href="styles/themes/green.css?<?= $version ?>" id="green-theme" <?= $colorTheme != "green" ? "disabled" : "" ?>>
-    <link rel="stylesheet" href="styles/themes/yellow.css?<?= $version ?>" id="yellow-theme" <?= $colorTheme != "yellow" ? "disabled" : "" ?>>
-    <link rel="stylesheet" href="styles/themes/purple.css?<?= $version ?>" id="purple-theme" <?= $colorTheme != "purple" ? "disabled" : "" ?>>
+    <link rel="stylesheet" href="styles/theme.css?<?= $assetVersion ?>">
+    <link rel="stylesheet" href="styles/login.css?<?= $assetVersion ?>">
+    <link rel="stylesheet" href="styles/themes/red.css?<?= $assetVersion ?>" id="red-theme" <?= $colorTheme != "red" ? "disabled" : "" ?>>
+    <link rel="stylesheet" href="styles/themes/green.css?<?= $assetVersion ?>" id="green-theme" <?= $colorTheme != "green" ? "disabled" : "" ?>>
+    <link rel="stylesheet" href="styles/themes/yellow.css?<?= $assetVersion ?>" id="yellow-theme" <?= $colorTheme != "yellow" ? "disabled" : "" ?>>
+    <link rel="stylesheet" href="styles/themes/purple.css?<?= $assetVersion ?>" id="purple-theme" <?= $colorTheme != "purple" ? "disabled" : "" ?>>
     <link rel="stylesheet" href="styles/font-awesome.min.css">
     <link rel="stylesheet" href="styles/barlow.css">
-    <link rel="stylesheet" href="styles/login-dark-theme.css?<?= $version ?>" id="dark-theme" <?= $theme == "light" ? "disabled" : "" ?>>
+    <link rel="stylesheet" href="styles/login-dark-theme.css?<?= $assetVersion ?>" id="dark-theme" <?= $theme == "light" ? "disabled" : "" ?>>
     <script type="text/javascript">
         window.update_theme_settings = "<?= $updateThemeSettings ?>";
         window.color_theme = <?= json_encode($colorTheme, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS) ?>;
     </script>
-    <script type="text/javascript" src="scripts/login.js?<?= $version ?>"></script>
-    <script type="text/javascript" src="scripts/auth-theme.js?<?= $version ?>"></script>
+    <script type="text/javascript" src="scripts/login.js?<?= $assetVersion ?>"></script>
+    <script type="text/javascript" src="scripts/auth-theme.js?<?= $assetVersion ?>"></script>
 </head>
 
 <body class="<?= $languages[$lang]['dir'] ?>">

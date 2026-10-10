@@ -319,9 +319,9 @@ while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
    
 
 </section>
-<script src="scripts/profile.js?<?= $version ?>"></script>
-<script src="scripts/theme.js?<?= $version ?>"></script>
-<script src="scripts/notifications.js?<?= $version ?>"></script>
+<script src="scripts/profile.js?<?= $assetVersion ?>"></script>
+<script src="scripts/theme.js?<?= $assetVersion ?>"></script>
+<script src="scripts/notifications.js?<?= $assetVersion ?>"></script>
 
 <?php
 require_once 'includes/footer.php';

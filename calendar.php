@@ -323,7 +323,7 @@ if ($weekStartsSunday) {
 </section>
 
 <?php require_once 'includes/subscription_details_popup.php'; ?>
-<script src="scripts/calendar.js?<?= $version ?>"></script>
+<script src="scripts/calendar.js?<?= $assetVersion ?>"></script>
 <?php
 require_once 'includes/footer.php';
 ?>

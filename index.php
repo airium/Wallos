@@ -480,7 +480,7 @@ while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 require_once 'includes/subscription_details_popup.php';
 ?>
 
-<script src="scripts/dashboard.js?<?= $version ?>"></script>
+<script src="scripts/dashboard.js?<?= $assetVersion ?>"></script>
 
 <?php
 require_once 'includes/footer.php';
