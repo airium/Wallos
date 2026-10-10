@@ -49,8 +49,7 @@ function formatPrice($price, $currencyCode, $currencySymbol)
     $formattedPrice = CurrencyFormatter::format($price, $currencyCode);
 
     if (strpos($formattedPrice, $currencyCode) !== false) {
-        $formattedPrice = str_replace($currencyCode, $currencySymbol . ' ', $formattedPrice);
-        $formattedPrice = preg_replace('/\s+/', ' ', $formattedPrice);
+        $formattedPrice = str_replace($currencyCode, $currencySymbol, $formattedPrice);
     }
 
     return $formattedPrice;
@@ -387,7 +386,7 @@ while ($userToNotify = $usersToNotify->fetchArray(SQLITE3_ASSOC)) {
                 echo "Current date: " . $currentDate->format('Y-m-d') . "<br />";
                 echo "Difference: " . $difference . "<br /><br />";
                 $notify[$rowSubscription['payer_user_id']][$i]['name'] = html_entity_decode($rowSubscription['name'], ENT_QUOTES, 'UTF-8');
-                $notify[$rowSubscription['payer_user_id']][$i]['price'] = $rowSubscription['price'] . $currencies[$rowSubscription['currency_id']]['symbol'];
+                $notify[$rowSubscription['payer_user_id']][$i]['price'] = formatPrice($rowSubscription['price'], $currencies[$rowSubscription['currency_id']]['code'], $currencies[$rowSubscription['currency_id']]['symbol']);
                 $notify[$rowSubscription['payer_user_id']][$i]['currency'] = $currencies[$rowSubscription['currency_id']]['name'];
                 $notify[$rowSubscription['payer_user_id']][$i]['currency_symbol'] = $currencies[$rowSubscription['currency_id']]['symbol'];
                 $notify[$rowSubscription['payer_user_id']][$i]['formatted_price'] = formatPrice($rowSubscription['price'], $currencies[$rowSubscription['currency_id']]['code'], $currencies[$rowSubscription['currency_id']]['symbol']);

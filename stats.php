@@ -317,7 +317,7 @@ $potentialMonthlySavings = get_upcoming_cancellations_monthly_value($upcomingCan
               <?php
               if ($monthOverMonthPercentage !== null) {
                 ?>
-                <div class="subtitle"><?= $momSign ?><?= number_format(abs($monthOverMonthPercentage), 1) ?>%</div>
+                <div class="subtitle"><?= $momSign ?><?= CurrencyFormatter::number(abs($monthOverMonthPercentage), 1) ?>%</div>
                 <?php
               }
               ?>
@@ -388,7 +388,7 @@ $potentialMonthlySavings = get_upcoming_cancellations_monthly_value($upcomingCan
         if ($showMonthlyStats && isset($monthlyBudgetUsed)) {
           ?>
           <div class="statistic">
-            <span><?= number_format($monthlyBudgetUsed, 2) ?>%</span>
+            <span><?= CurrencyFormatter::number($monthlyBudgetUsed, 2) ?>%</span>
             <div class="title"><?= translate('monthly_budget', $i18n) ?> - <?= translate('percentage_budget_used', $i18n) ?></div>
           </div>
           <div class="statistic">
@@ -415,7 +415,7 @@ $potentialMonthlySavings = get_upcoming_cancellations_monthly_value($upcomingCan
             <div class="period-range"><?= $periodRangeLabel ?></div>
           </div>
           <div class="statistic">
-            <span><?= number_format($periodBudgetUsed, 2) ?>%</span>
+            <span><?= CurrencyFormatter::number($periodBudgetUsed, 2) ?>%</span>
             <div class="title"><?= translate('period_budget', $i18n) ?> - <?= translate('percentage_budget_used', $i18n) ?></div>
             <div class="period-range"><?= $periodRangeLabel ?></div>
           </div>
@@ -565,7 +565,7 @@ $potentialMonthlySavings = get_upcoming_cancellations_monthly_value($upcomingCan
           if ($oldestSubscription !== null) {
             ?>
             <div class="statistic short">
-              <span><?= number_format($oldestSubscription['years'], 1) ?></span>
+              <span><?= CurrencyFormatter::number($oldestSubscription['years'], 1) ?></span>
               <div class="title"><?= translate('oldest_subscription', $i18n) ?></div>
               <?php
               if (!empty($oldestSubscription['logo'])) {
@@ -588,7 +588,7 @@ $potentialMonthlySavings = get_upcoming_cancellations_monthly_value($upcomingCan
           if ($averageSubscriptionAge !== null) {
             ?>
             <div class="statistic">
-              <span><?= number_format($averageSubscriptionAge, 1) ?></span>
+              <span><?= CurrencyFormatter::number($averageSubscriptionAge, 1) ?></span>
               <div class="title"><?= translate('average_subscription_age', $i18n) ?></div>
             </div>
             <?php

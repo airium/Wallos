@@ -28,3 +28,17 @@ for (const timezone of ['UTC', 'Asia/Singapore', 'America/Los_Angeles', 'Pacific
 if (originalTimezone === undefined) delete process.env.TZ;
 else process.env.TZ = originalTimezone;
 console.log('ISO date formatting and validation passed across 4 time zones.');
+
+const context = vm.createContext({ navigator: { language: 'en-US' } });
+vm.runInContext(source, context);
+const format = expression => vm.runInContext(expression, context);
+assert.equal(format('WallosFormat.currency(1234.56, "USD")'), '$\u00a01\u202f234.56');
+assert.equal(format('WallosFormat.currency(-1234.56, "USD")'), '-$\u00a01\u202f234.56');
+assert.equal(format('WallosFormat.currency(1234.56, "EUR", "fr-FR")'), '1\u202f234,56\u00a0€');
+assert.equal(format('WallosFormat.currency(1234.56, "JPY")'), '¥\u00a01\u202f235');
+assert.equal(format('WallosFormat.currency(0.5, "USD")'), '$\u00a00.50');
+assert.equal(format('WallosFormat.currency(0, "USD")'), '$\u00a00.00');
+assert.equal(format('WallosFormat.currency(1234.56, "not-a-currency", "en-US", "unit")'), 'unit\u00a01\u202f234.56');
+assert.equal(format('WallosFormat.number(1234567.89)'), '1\u202f234\u202f567.89');
+assert(format('WallosFormat.currency(1.234, "BHD")').includes('1.234'));
+console.log('Currency spacing, grouping, signs, precision and fallback checks passed.');

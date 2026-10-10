@@ -28,16 +28,8 @@ function showSubscriptionDetails(event, id) {
 }
 
 function detailsFormatPrice(price, currencyId) {
-  const lookups = window.subscriptionLookups;
-  const currency = lookups.currencies[currencyId];
-  const value = Number(price);
-  if (currency && currency.code) {
-    try {
-      return new Intl.NumberFormat(window.lang || 'en', { style: 'currency', currency: currency.code }).format(value);
-    } catch (e) { /* unknown currency code, fall through */ }
-  }
-  const symbol = currency ? (currency.symbol || currency.code || '') : '';
-  return `${symbol}${value.toFixed(2)}`;
+  const currency = window.subscriptionLookups.currencies[currencyId];
+  return WallosFormat.currency(Number(price), currency?.code, navigator.language || 'en-US', currency?.symbol || currency?.code || '');
 }
 
 function detailsFormatDate(dateString) {

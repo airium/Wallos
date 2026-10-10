@@ -2,23 +2,32 @@
 
 final class CurrencyFormatter
 {
-    private static $instance;
+    private static $instances = [];
 
-    private static function getInstance()
+    private static function getInstance($locale = null)
     {
-        if (self::$instance === null) {
-            if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-                self::$instance = new NumberFormatter(Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']), NumberFormatter::CURRENCY);
-            } else {
-                self::$instance = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
-            }
+        $locale = $locale ?: (Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? 'en-US') ?: 'en_US');
+        if (!isset(self::$instances[$locale])) {
+            $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+            $formatter->setSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL, "\u{202F}");
+            $formatter->setSymbol(NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, "\u{202F}");
+            self::$instances[$locale] = $formatter;
         }
 
-        return self::$instance;
+        return self::$instances[$locale];
     }
 
-    public static function format($amount, $currency)
+    public static function format($amount, $currency, $locale = null)
     {
-        return self::getInstance()->formatCurrency((float) $amount, $currency);
+        $formatted = self::getInstance($locale)->formatCurrency((float) $amount, $currency);
+        // Preserve the locale's currency placement, decimal separator, sign,
+        // and currency-specific precision, but always separate unit and value.
+        $formatted = preg_replace('/([\p{L}\p{Sc}])[\p{Z}\s]*(?=[+\-\x{2212}]?\p{N})/u', '$1' . "\u{00A0}", $formatted);
+        return preg_replace('/(\p{N})[\p{Z}\s]*(?=[\p{L}\p{Sc}])/u', '$1' . "\u{00A0}", $formatted);
+    }
+
+    public static function number($amount, $decimals = 2)
+    {
+        return number_format((float) $amount, $decimals, '.', "\u{202F}");
     }
 }

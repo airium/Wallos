@@ -1,4 +1,5 @@
 <?php
+require_once '../../includes/currency_formatter.php';
 /*
 This API Endpoint accepts both POST and GET requests.
 It receives the following parameters:
@@ -158,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "GET
         $subscription['payment_method'] = $subscription['payment_method_name'];
         $subscription['currency'] = isset($currencies[$subscription['currency_id']]) ? $currencies[$subscription['currency_id']]['symbol'] : '';
         $subscription['trigger'] = ($subscription['notify_days_before'] == -1) ? $globalNotificationDays : ($subscription['notify_days_before'] ?: 1);
-        $subscription['price'] = number_format($subscription['price'], 2);
+        $formattedPrice = CurrencyFormatter::format($subscription['price'], $currencies[$subscription['currency_id']]['code']);
 
         $uid = 'wallos-subscription-' . $subscription['id'] . '@wallos';
         $summary = icalEscape(html_entity_decode($subscription['name'], ENT_QUOTES, 'UTF-8'));
@@ -166,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "GET
         $category = icalEscape($subscription['category']);
         $paymentMethod = icalEscape($subscription['payment_method']);
         $payer = icalEscape($subscription['payer_user']);
-        $description = "Price: {$subscription['currency']}{$subscription['price']}\\nCategory: {$category}\\nPayment Method: {$paymentMethod}\\nPayer: {$payer}\\nNotes: {$notes}";
+        $description = "Price: {$formattedPrice}\\nCategory: {$category}\\nPayment Method: {$paymentMethod}\\nPayer: {$payer}\\nNotes: {$notes}";
         $dtstamp = gmdate('Ymd\THis\Z');
         $dtstart = (new DateTime($subscription['next_payment']))->format('Ymd');
         $dtend = (new DateTime($subscription['next_payment']))->format('Ymd');

@@ -7,6 +7,7 @@ require_once 'validate.php';
 require_once __DIR__ . '/../../includes/connect_endpoint_crontabs.php';
 require_once __DIR__ . '/../../includes/ssrf_helper.php';
 require_once __DIR__ . '/../../includes/webhook_helper.php';
+require_once __DIR__ . '/../../includes/currency_formatter.php';
 
 require __DIR__ . '/../../libs/PHPMailer/PHPMailer.php';
 require __DIR__ . '/../../libs/PHPMailer/SMTP.php';
@@ -194,7 +195,7 @@ while ($userToNotify = $usersToNotify->fetchArray(SQLITE3_ASSOC)) {
         $currentDate = new DateTime('now');
         while ($rowSubscription = $resultSubscriptions->fetchArray(SQLITE3_ASSOC)) {
             $notify[$rowSubscription['payer_user_id']][$i]['name'] = $rowSubscription['name'];
-            $notify[$rowSubscription['payer_user_id']][$i]['price'] = $rowSubscription['price'] . $currencies[$rowSubscription['currency_id']]['symbol'];
+            $notify[$rowSubscription['payer_user_id']][$i]['price'] = CurrencyFormatter::format($rowSubscription['price'], $currencies[$rowSubscription['currency_id']]['code']);
             $notify[$rowSubscription['payer_user_id']][$i]['currency'] = $currencies[$rowSubscription['currency_id']]['name'];
             $notify[$rowSubscription['payer_user_id']][$i]['category'] = $categories[$rowSubscription['category_id']]['name'];
             $notify[$rowSubscription['payer_user_id']][$i]['payer'] = $household[$rowSubscription['payer_user_id']]['name'];

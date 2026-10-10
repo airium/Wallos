@@ -1,4 +1,37 @@
 const WallosFormat = (() => {
+  const numberFormatters = new Map();
+  const currencyFormatters = new Map();
+  const locale = () => navigator.language || 'en-US';
+
+  function number(value, options = {}, language = locale()) {
+    const key = JSON.stringify([language, options]);
+    if (!numberFormatters.has(key)) {
+      numberFormatters.set(key, new Intl.NumberFormat(language, options));
+    }
+    return numberFormatters.get(key).formatToParts(value)
+      .map(part => part.type === 'group' ? '\u202f' : part.value).join('');
+  }
+
+  function currency(value, code, language = locale(), symbol = code) {
+    try {
+      const key = JSON.stringify([language, code]);
+      if (!currencyFormatters.has(key)) {
+        currencyFormatters.set(key, new Intl.NumberFormat(language, { style: 'currency', currency: code }));
+      }
+      const parts = currencyFormatters.get(key).formatToParts(value);
+      const firstDigit = parts.findIndex(part => part.type === 'integer');
+      return parts.map((part, index) => {
+        if (part.type === 'group') return '\u202f';
+        if (part.type === 'literal') return part.value.replace(/[\u0020\u00a0\u202f]/g, '');
+        if (part.type === 'currency') return index < firstDigit ? `${part.value}\u00a0` : `\u00a0${part.value}`;
+        return part.value;
+      }).join('');
+    } catch (error) {
+      const amount = number(Math.abs(Number(value)), { minimumFractionDigits: 2, maximumFractionDigits: 2 }, language);
+      return `${Number(value) < 0 ? '-' : ''}${symbol ? `${symbol}\u00a0` : ''}${amount}`;
+    }
+  }
+
   function date(value) {
     if (!value) return '';
     const parsed = value instanceof Date ? value : new Date(value + 'T00:00:00');
@@ -20,5 +53,5 @@ const WallosFormat = (() => {
       && parsed.getUTCDate() === day;
   }
 
-  return { date, isISODate };
+  return { date, isISODate, number, currency };
 })();

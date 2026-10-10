@@ -15,8 +15,8 @@ function loadGraph(container, dataPoints, currency, run) {
 
     const t = _chartTheme();
     const fmt = val => currency
-        ? new Intl.NumberFormat(navigator.language, { style: 'currency', currency }).format(val)
-        : new Intl.NumberFormat(navigator.language).format(val);
+        ? WallosFormat.currency(val, currency)
+        : WallosFormat.number(val);
 
     const hidden = new Array(dataPoints.length).fill(false);
 
@@ -75,8 +75,8 @@ function loadLineGraph(container, dataPoints, currency, run) {
 
     const t = _chartTheme();
     const fmt = val => currency
-        ? new Intl.NumberFormat(navigator.language, { style: 'currency', currency }).format(val)
-        : new Intl.NumberFormat(navigator.language).format(val);
+        ? WallosFormat.currency(val, currency)
+        : WallosFormat.number(val);
 
     // Mark the 12-month high and low so the extremes read at a glance
     const values = dataPoints.map(p => p.y);
@@ -137,8 +137,8 @@ function loadBarGraph(container, dataPoints, currency, run, thresholdLine) {
     const cs = getComputedStyle(document.documentElement);
     const errorColor = cs.getPropertyValue('--error-color').trim() || '#EF4444';
     const fmt = val => currency
-        ? new Intl.NumberFormat(navigator.language, { style: 'currency', currency }).format(val)
-        : new Intl.NumberFormat(navigator.language).format(val);
+        ? WallosFormat.currency(val, currency)
+        : WallosFormat.number(val);
 
     const annotations = {};
     if (thresholdLine !== null && thresholdLine !== undefined) {
@@ -205,8 +205,8 @@ function loadHorizontalBarGraph(container, dataPoints, currency, run) {
 
     const t = _chartTheme();
     const fmt = val => currency
-        ? new Intl.NumberFormat(navigator.language, { style: 'currency', currency }).format(val)
-        : new Intl.NumberFormat(navigator.language).format(val);
+        ? WallosFormat.currency(val, currency)
+        : WallosFormat.number(val);
 
     const chart = new ApexCharts(document.getElementById(container), {
         chart: {

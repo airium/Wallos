@@ -304,7 +304,7 @@ while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                     <p class="subscription-item-title"><?= translate("budget_used", $i18n) ?></p>
                                     <div class="subscription-item-info">
                                         <p class="subscription-item-value">
-                                            <?= number_format($monthlyBudgetUsed, 2) ?>%
+                                            <?= CurrencyFormatter::number($monthlyBudgetUsed, 2) ?>%
                                         </p>
                                     </div>
                                 </div>
@@ -362,7 +362,7 @@ while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                 <p class="subscription-item-title"><?= translate("budget_used", $i18n) ?></p>
                                 <div class="subscription-item-info">
                                     <p class="subscription-item-value">
-                                        <?= number_format($periodBudgetUsed, 2) ?>%
+                                        <?= CurrencyFormatter::number($periodBudgetUsed, 2) ?>%
                                     </p>
                                 </div>
                             </div>

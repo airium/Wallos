@@ -1,4 +1,5 @@
 <?php
+require_once '../../includes/currency_formatter.php';
 /*
 This API Endpoint accepts both POST and GET requests.
 It receives the following parameters:
@@ -8,8 +9,8 @@ It receives the following parameters:
 
 It returns a JSON object with the following properties:
 - success: whether the request was successful (boolean).
-- title: a string with "${month} ${year}" (e.g., "March 2025").
-- monthly_cost: a float with the total cost for the given month.
+- title: a numeric month label (e.g., "2025-03").
+- monthly_cost: a formatted string with the total cost for the given month.
 - localized_monthly_cost: a string with the total cost formatted according to the user's locale and currency.
 - currency_code: a string with the currency code of the user's main currency.
 - currency_symbol: a string with the currency symbol of the user's main currency.
@@ -18,9 +19,9 @@ It returns a JSON object with the following properties:
 Example response:
 {
   "success": true,
-  "title": "March 2025",
+  "title": "2025-03",
   "monthly_cost": "120.24",
-  "localized_monthly_cost": "€120.24",
+  "localized_monthly_cost": "€ 120.24",
   "currency_code": "EUR",
   "currency_symbol": "€",
   "notes": []
@@ -162,13 +163,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "GET
         }
     }
 
-    $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
-    $localizedMonthlyCost = $formatter->formatCurrency($monthlyCost, $currency_code);
+    $localizedMonthlyCost = CurrencyFormatter::format($monthlyCost, $currency_code);
 
     echo json_encode([
         'success' => true,
         'title' => $title,
-        'monthly_cost' => number_format($monthlyCost, 2),
+        'monthly_cost' => CurrencyFormatter::number($monthlyCost, 2),
         'localized_monthly_cost' => $localizedMonthlyCost,
         'currency_code' => $currency_code,
         'currency_symbol' => $currency_symbol,

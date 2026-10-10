@@ -1,4 +1,5 @@
 <?php
+require_once '../../includes/currency_formatter.php';
 require_once '../../includes/connect_endpoint.php';
 require_once '../../includes/validate_endpoint.php';
 require_once '../../includes/getdbkeys.php';
@@ -29,7 +30,7 @@ if ($subscription) {
     $subscription['payment_method'] = $payment_methods[$subscription['payment_method_id']]['name'];
     $subscription['currency'] = $currencies[$subscription['currency_id']]['symbol'];
     $subscription['trigger'] = $subscription['notify_days_before'] ? $subscription['notify_days_before'] : 1;
-    $subscription['price'] = number_format($subscription['price'], 2);
+    $formattedPrice = CurrencyFormatter::format($subscription['price'], $currencies[$subscription['currency_id']]['code']);
 
     // Create ICS from subscription information
     $uid = 'wallos-subscription-' . $subscription['id'] . '@wallos';
@@ -38,7 +39,7 @@ if ($subscription) {
     $category = icalEscape($subscription['category']);
     $paymentMethod = icalEscape($subscription['payment_method']);
     $payer = icalEscape($subscription['payer_user']);
-    $description = "Price: {$subscription['currency']}{$subscription['price']}\\nCategory: {$category}\\nPayment Method: {$paymentMethod}\\nPayer: {$payer}\\n\\nNotes: {$notes}";
+    $description = "Price: {$formattedPrice}\\nCategory: {$category}\\nPayment Method: {$paymentMethod}\\nPayer: {$payer}\\n\\nNotes: {$notes}";
 
     $dtstamp = gmdate('Ymd\THis\Z');
     $dtstart = (new DateTime($subscription['next_payment']))->format('Ymd');
