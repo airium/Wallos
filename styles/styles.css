@@ -1764,8 +1764,8 @@ input[type="date"] {
 input.iso-date-input {
   padding-inline-start: var(--date-inset);
   padding-inline-end: calc(var(--date-button-width) + 4px);
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
   font-variant-numeric: tabular-nums;
+  font-kerning: none;
 }
 
 .iso-date-control>input.iso-date-input::placeholder {
@@ -1782,15 +1782,28 @@ input.iso-date-input::selection {
   caret-color: transparent;
 }
 
+.iso-date-hint,
+.iso-date-measure {
+  font: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  font-kerning: none;
+}
+
+.iso-date-measure {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+
 .iso-date-hint {
   position: absolute;
-  inset-inline-start: var(--date-inset);
+  inset-inline-start: calc(var(--date-inset) + 1px);
   top: 1px;
   bottom: 1px;
   pointer-events: none;
-  font: inherit;
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
-  font-size: 16px;
   color: var(--text-muted);
 }
 
@@ -1798,6 +1811,7 @@ input.iso-date-input::selection {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  transform-origin: left center;
   white-space: pre;
 }
 
@@ -1812,8 +1826,6 @@ input.iso-date-input::selection {
   height: 22px;
   border-radius: 3px;
   pointer-events: none;
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
-  font-size: 16px;
   background-color: rgba(var(--main-color-rgb), 0.22);
 }
 
@@ -1860,7 +1872,7 @@ input.iso-date-native {
 
   input.iso-date-input,
   .iso-date-hint,
-  .iso-date-marker {
+  .iso-date-measure {
     font-size: 14px;
   }
 }

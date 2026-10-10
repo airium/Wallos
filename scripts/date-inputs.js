@@ -50,11 +50,14 @@ const WallosDateInputs = (() => {
     const hintParts = fields.map(() => {
       const part = document.createElement('span'); hint.append(part); return part;
     });
-    const separators = [4, 7].map(position => {
+    const separators = [4, 7].map(() => {
       const separator = document.createElement('span');
-      separator.textContent = '-'; separator.style.left = `${position}ch`;
+      separator.textContent = '-';
       hint.append(separator); return separator;
     });
+    const measure = document.createElement('span');
+    measure.className = 'iso-date-measure';
+    measure.setAttribute('aria-hidden', 'true');
     const marker = document.createElement('span');
     marker.className = 'iso-date-marker';
     marker.setAttribute('aria-hidden', 'true');
@@ -72,7 +75,7 @@ const WallosDateInputs = (() => {
     button.setAttribute('aria-label', `${label} — Calendar`);
     button.title = button.getAttribute('aria-label');
     button.innerHTML = '<i class="fa-solid fa-calendar-days" aria-hidden="true"></i>';
-    wrapper.append(marker, hint, picker, button);
+    wrapper.append(marker, hint, measure, picker, button);
 
     const state = { active: 0, value: input.value, writing: false, selecting: false, pointer: false, rejected: '', undo: [], redo: [] };
     const editable = () => !input.matches(':disabled') && !input.readOnly;
@@ -85,13 +88,33 @@ const WallosDateInputs = (() => {
       fields.forEach((field, index) => {
         const length = parts?.[index].length || 0;
         hintParts[index].textContent = field.hint.slice(length);
-        hintParts[index].style.left = `${field.start + length}ch`;
         hintParts[index].classList.toggle('is-active', focused && state.active === index);
       });
       separators.forEach(separator => { separator.hidden = !!input.value; });
       marker.hidden = !focused || !!input.value;
-      marker.style.left = `calc(var(--date-inset) + ${fields[state.active].start}ch)`;
-      marker.style.width = `${fields[state.active].length}ch`;
+      if (wrapper.getClientRects().length) {
+        const width = text => {
+          measure.textContent = text;
+          return measure.getBoundingClientRect().width;
+        };
+        const digit = width('0'), separator = width('-');
+        // Preserve the draft's existing space-padded slots, but make each
+        // blank as wide as a tabular digit in the official proportional font.
+        input.style.wordSpacing = `${digit - width(' ')}px`;
+        const offset = (field, index) => (field.start - index) * digit + index * separator;
+        fields.forEach((field, index) => {
+          const length = parts?.[index].length || 0;
+          const part = hintParts[index], natural = width(part.textContent);
+          part.style.left = `${offset(field, index) + length * digit}px`;
+          const scale = natural ? Math.min(1, (field.length - length) * digit / natural) : 1;
+          part.style.transform = `translateY(-50%) scaleX(${scale})`;
+        });
+        separators.forEach((part, index) => {
+          part.style.left = `${(index ? 6 : 4) * digit + index * separator}px`;
+        });
+        marker.style.left = `calc(var(--date-inset) + 1px + ${offset(fields[state.active], state.active)}px)`;
+        marker.style.width = `${fields[state.active].length * digit}px`;
+      }
       wrapper.classList.toggle('is-placeholder-selected', focused && !input.value);
       button.disabled = !editable();
       const valid = validate(input, state.rejected);
@@ -264,6 +287,8 @@ const WallosDateInputs = (() => {
       write(parts, incomplete < 0 ? 2 : incomplete, true);
     });
     input.addEventListener('change', sync);
+    // Dialog visibility and responsive font sizes can change after setup.
+    new ResizeObserver(render).observe(wrapper);
     render();
   }
 
@@ -278,6 +303,7 @@ const WallosDateInputs = (() => {
 
   function ready() {
     refresh();
+    document.fonts?.addEventListener('loadingdone', () => refresh());
     document.querySelectorAll('form').forEach(form => form.addEventListener('reset', () => setTimeout(() => refresh(form), 0)));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once: true });
