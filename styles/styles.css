@@ -1752,6 +1752,8 @@ input[type="date"] {
 }
 
 .iso-date-control {
+  --date-inset: 15px;
+  --date-button-width: 40px;
   position: relative;
   display: block;
   flex-grow: 1;
@@ -1760,15 +1762,66 @@ input[type="date"] {
 }
 
 input.iso-date-input {
-  padding-inline-end: 44px;
+  padding-inline-start: var(--date-inset);
+  padding-inline-end: calc(var(--date-button-width) + 4px);
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
   font-variant-numeric: tabular-nums;
+}
+
+.iso-date-control>input.iso-date-input::placeholder {
+  color: transparent;
+  opacity: 0;
+}
+
+input.iso-date-input::selection {
+  background-color: rgba(var(--main-color-rgb), 0.22);
+  color: inherit;
+}
+
+.iso-date-control.is-placeholder-selected input {
+  caret-color: transparent;
+}
+
+.iso-date-hint {
+  position: absolute;
+  inset-inline-start: var(--date-inset);
+  top: 1px;
+  bottom: 1px;
+  pointer-events: none;
+  font: inherit;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.iso-date-hint>span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: pre;
+}
+
+.iso-date-hint>span.is-active {
+  color: var(--text-color);
+}
+
+.iso-date-marker {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 22px;
+  border-radius: 3px;
+  pointer-events: none;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  font-size: 16px;
+  background-color: rgba(var(--main-color-rgb), 0.22);
 }
 
 input.iso-date-native {
   position: absolute;
   inset-inline-end: 0;
   top: 0;
-  width: 40px;
+  width: var(--date-button-width);
   height: 50px;
   padding: 0;
   opacity: 0;
@@ -1779,18 +1832,37 @@ input.iso-date-native {
   position: absolute;
   inset-inline-end: 1px;
   top: 1px;
-  width: 40px;
+  width: var(--date-button-width);
   height: 48px;
   padding: 0;
   border: 0;
   border-radius: 10px;
   background: transparent;
   color: var(--text-muted);
+  font-size: 18px;
   cursor: pointer;
 }
 
 .iso-date-picker:hover {
   color: var(--main-color);
+}
+
+.iso-date-picker:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+@media (max-width: 768px) {
+  .iso-date-control {
+    --date-inset: 12px;
+    --date-button-width: 36px;
+  }
+
+  input.iso-date-input,
+  .iso-date-hint,
+  .iso-date-marker {
+    font-size: 14px;
+  }
 }
 
 input[type="text"].short {

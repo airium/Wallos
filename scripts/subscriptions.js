@@ -1152,6 +1152,7 @@ function toggleOneTimeCycleUI(isOneTime) {
     if (notifyDaysCancellationGroup) notifyDaysCancellationGroup.style.display = '';
     if (notificationsCheckbox) notificationsCheckbox.disabled = false;
   }
+  WallosDateInputs.refresh(document.querySelector('#subs-form'));
 }
 
 function autoFillNextPaymentDate(e) {

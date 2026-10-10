@@ -38,6 +38,19 @@ We welcome contributions from the community and look forward to working with you
     Use `CONTAINER_ENGINE=docker dev/test.sh` if you prefer Docker over Podman.
     Tests build the real schema by running `createdatabase.php` and the
     migration chain, so they exercise the schema the application produces.
+
+    Formatting also has a dependency-free JavaScript check:
+
+    ```bash
+    node tests/js/formatting_test.cjs
+    ```
+
+    With Playwright and its Chromium browser installed, test the segmented date
+    fields with `node tests/browser/date-inputs_test.cjs`. If Playwright is
+    installed outside the repository, set `NODE_PATH` to its `node_modules`
+    directory and `PLAYWRIGHT_BROWSERS_PATH` to its browser directory.
+    Set `WALLOS_BROWSER=firefox` to run the same checks with Firefox installed.
+
 6.  **Commit your changes:** Commit your changes with a clear and concise message:
 
     ```bash
