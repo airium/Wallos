@@ -266,8 +266,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "GET
             $orderByClauses[] = "inactive ASC";
         }
     }
-    if ($sort != "next_payment") {
-        $orderByClauses[] = "next_payment ASC";
+    if ($sort != "name") {
+        $orderByClauses[] = "name ASC";
     }
     $sql .= " ORDER BY " . implode(", ", $orderByClauses);
 

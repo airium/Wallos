@@ -153,7 +153,9 @@ function printSubscriptions($subscriptions, $sort, $categories, $members, $i18n,
 {
     if ($sort === "price") {
         usort($subscriptions, function ($a, $b) {
-            return $a['price'] < $b['price'] ? 1 : -1;
+            return ($b['price'] <=> $a['price'])
+                ?: ($a['inactive'] <=> $b['inactive'])
+                ?: strcmp($a['name'], $b['name']);
         });
         if ($disabledToBottom === 'true') {
             usort($subscriptions, function ($a, $b) {
